@@ -1,0 +1,26 @@
+{% extends "base.html" %} {% block title %}Home{% endblock %} {% block content
+    %}
+    {% for item in items %}
+
+  {% if loop.index0 % 3 == 0 %}
+    <div class="row"> 
+  {% endif %}
+
+  <div class="col-md-4" style="padding: 10px;">
+    <div class="card" style="align-items: center;">
+      <img src="{{ item.image }}" class="card-img-top">
+            <div class="card-body">
+              <h5 class="card-title">{{item.name}}</h5>
+              <p class="card-text">{{item.description}}</p>
+              <p class="card-text">Price: {{item.price}}</p>
+              <a href="#" class="btn btn-primary">Add to Cart</a>
+            </div>
+    </div>
+  </div>
+
+  {% if loop.index0 % 3 == 2 or loop.last %}
+    </div>
+  {% endif %}
+
+{% endfor %}
+    {% endblock %}
