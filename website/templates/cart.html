@@ -1,4 +1,12 @@
-{% extends "base.html" %} {% block title %}Cart{% endblock %}
+{% extends "base.html" %} {% block title %}Cart{% endblock %} {% block content %}
 
-{% block content %}
+<div class="total">
+  Total: {% set total = 0 %}
+           {% for item in cart_items %}
+             {% set total = total + item.price %}
+           {% endfor %}
+           {{ total }}
+<button class="btn-primary">Proceed to Checkout</button>
+</div>
+
 {% endblock %}
