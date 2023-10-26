@@ -64,3 +64,34 @@ def sign_up():
             return redirect(url_for('views.home'))
 
     return render_template("sign_up.html", user=current_user)
+
+@auth.route('/reset_password', methods=['GET', 'POST'])
+def reset_password():
+    if request.method == 'POST':
+
+        email = request.form.get('email')
+        oldpassword = request.form.get('oldpassword')
+        newpassword1 = request.form.get('newpassword1')
+        newpassword2 = request.form.get('newpassword2')
+        
+        user = User.query.filter_by(email=email).first()
+        
+        if not user:
+            flash('User does not exists.', category='error')
+        elif newpassword1 != newpassword2:
+            flash('Passwords don\'t match.', category='error')
+        elif len(oldpassword) < 7:
+            flash('Password must be at least 7 characters.', category='error')
+        elif oldpassword == newpassword1:
+            flash('Password should not be same as old passowrd', category='error')
+        else:
+            if user and check_password_hash(user.password, oldpassword):
+                user.password = generate_password_hash(newpassword1) 
+                db.session.commit()
+                flash('Password updated successfully!', category='success')
+                login_user(user, remember=True)
+                return redirect(url_for('views.home'))
+            else:
+                flash('Invalid email or password', category='error')
+            
+    return render_template("reset_password.html", user=current_user)
