@@ -12,6 +12,9 @@
               <h5 class="card-title">{{item.name}}</h5>
               <p class="card-text">{{item.description}}</p>
               <p class="card-text">Price: {{item.price}}</p>
+              <p class="card-text">Quantity:&nbsp;
+                <input type="number" name="quantity" min="1" max="10" step="1">
+              </p>
               <button name='{{item.product_id}}' class="btn btn-primary">Add to Cart</button>
             </div>
     </div>
